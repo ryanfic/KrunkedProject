@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "790986059787",
+    "firebase_url": "https://krunked-b201a.firebaseio.com",
+    "project_id": "krunked-b201a",
+    "storage_bucket": "krunked-b201a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790986059787:android:d7a7e73362d7b074a5570e",
+        "android_client_info": {
+          "package_name": "com.example.krunkedkamloops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790986059787-hn55sabq8vfqgri9mbde39u23r32bikf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmfCpnCslL_Unp9mGJyaA7rBRyGK7TK5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790986059787-hn55sabq8vfqgri9mbde39u23r32bikf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

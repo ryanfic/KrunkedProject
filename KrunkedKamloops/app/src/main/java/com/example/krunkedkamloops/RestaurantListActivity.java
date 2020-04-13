@@ -41,7 +41,8 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("try me");
-        DatabaseReference myRef = database.getReference("msg");
+        DatabaseReference myRef = database.getReference().child("msg");
+        //myRef.setValue("Neeeat!");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
