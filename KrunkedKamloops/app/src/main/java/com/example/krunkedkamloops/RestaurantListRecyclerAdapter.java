@@ -20,14 +20,16 @@ import java.util.ArrayList;
 public class RestaurantListRecyclerAdapter extends RecyclerView.Adapter<RestaurantListRecyclerAdapter.ViewHolder> { // the generic is the ViewHolder that will be shown in the recycler view
     private static final String TAG = "RestaurantListRecyclerAdapter";
 
-    private ArrayList<String> mPubNames = new ArrayList<>(); // list of pub names
-    private ArrayList<String> mPubLocations = new ArrayList<>(); // list of pub locations
+    private ArrayList<Pub> mPubs = new ArrayList<>(); //list of pubs
+    /*private ArrayList<String> mPubNames = new ArrayList<>(); // list of pub names
+    private ArrayList<String> mPubLocations = new ArrayList<>(); // list of pub locations*/
     private Context mContext;
 
 
-    public RestaurantListRecyclerAdapter(Context context, ArrayList<String> pubNames, ArrayList<String> pubLocations) {
-        mPubNames = pubNames;
-        mPubLocations = pubLocations;
+    public RestaurantListRecyclerAdapter(Context context, ArrayList<Pub> pubs /*ArrayList<String> pubNames, ArrayList<String> pubLocations*/) {
+        /*mPubNames = pubNames;
+        mPubLocations = pubLocations;*/
+        mPubs = pubs;
         mContext = context;
     }
 
@@ -41,13 +43,13 @@ public class RestaurantListRecyclerAdapter extends RecyclerView.Adapter<Restaura
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.pubNameText.setText(mPubNames.get(position));
-        holder.pubLocText.setText(mPubLocations.get(position));
+        holder.pubNameText.setText(mPubs.get(position).getName());
+        holder.pubLocText.setText(mPubs.get(position).getLocation());
         holder.pubNameText.setOnClickListener(new View.OnClickListener(){ // On click listener for the pub name
             @Override
             public void onClick(View view){ // stuff to do when pub name text is clicked
-                Log.d(TAG, "onClick: clicked on: " + mPubNames.get(position)); // in logcat
-                Toast.makeText(mContext, mPubNames.get(position), Toast.LENGTH_SHORT).show(); // on screen
+                /*Log.d(TAG, "onClick: clicked on: " + mPubNames.get(position)); // in logcat
+                Toast.makeText(mContext, mPubNames.get(position), Toast.LENGTH_SHORT).show(); // on screen*/
                 onNameTextClick(position);
             }
         });
@@ -55,15 +57,15 @@ public class RestaurantListRecyclerAdapter extends RecyclerView.Adapter<Restaura
         holder.pubLocText.setOnClickListener(new View.OnClickListener(){ // on click listener for the pub location
             @Override
             public void onClick(View view){ // stuff to do when pub location text is clicked
-                Log.d(TAG, "onClick: clicked on: " + mPubLocations.get(position)); // in logcat
-                Toast.makeText(mContext, mPubLocations.get(position), Toast.LENGTH_SHORT).show(); // on screen
+                /*Log.d(TAG, "onClick: clicked on: " + mPubLocations.get(position)); // in logcat
+                Toast.makeText(mContext, mPubLocations.get(position), Toast.LENGTH_SHORT).show(); // on screen*/
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mPubNames.size(); // the number of items is equal to the number of items in the pub name list
+        return mPubs.size(); // the number of items is equal to the number of items in the pub name list
     }
 
 
@@ -82,8 +84,9 @@ public class RestaurantListRecyclerAdapter extends RecyclerView.Adapter<Restaura
 
     public void onNameTextClick(int position){
         Intent intent = new Intent(mContext,RestaurantDetailsActivity.class);
-        String pubName = mPubNames.get(position);
+        String pubName = mPubs.get(position).getName();
         Log.d(TAG, "onNameTextClick: clicked on: " + pubName); // in logcat
         mContext.startActivity(intent);
     }
+
 }

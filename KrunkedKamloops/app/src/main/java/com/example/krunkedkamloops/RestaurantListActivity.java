@@ -23,6 +23,8 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     private ArrayList<Pub> mPubs = new ArrayList<>(); // list of pubs
 
+    private FirebaseDatabase databaseRef;
+
     private DatabaseReference pubTableRef;
     private DatabaseReference drinkTableRef;
 
@@ -39,9 +41,9 @@ public class RestaurantListActivity extends AppCompatActivity {
         Log.d("NEATO", "STARTED");
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseRef = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("try me");
-        DatabaseReference myRef = database.getReference().child("msg");
+        DatabaseReference myRef = databaseRef.getReference("krunkeddb").child("msg");
         //myRef.setValue("Neeeat!");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,17 +74,38 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     // Set up the data
     private void initPubData(){
+        pubTableRef = databaseRef.getReference("Restaurant Table");
+        pubTableRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("NEATO" ,"Count: " + dataSnapshot.getChildrenCount());
+                for (DataSnapshot pubSnapshot: dataSnapshot.getChildren()) { // loop through all pubs in the list
+                    //set up the pub
+                    String name = pubSnapshot.child("Name").getValue(String.class);
+                    Log.e("NEATO", "Name is: " + name);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("NEATO", "Failed to read value.", error.toException());
+            }
+        });
+
+        //DatabaseReference myRef = database.getReference("try me");
+
         //for(int i = 0; i < )
 
 
-        String[] names = getResources().getStringArray(R.array.restaurant_names); // Get the list of names
+        /*String[] names = getResources().getStringArray(R.array.restaurant_names); // Get the list of names
         for(int i = 0; i < names.length; i++){
             mNames.add(names[i]); // add the names to the list
         }
         String[] locs = getResources().getStringArray(R.array.restaurant_locations);
         for(int i = 0; i < locs.length; i++){
             mLocs.add(locs[i]);
-        }
+        }*/
 
         initRecyclerView();
     }
@@ -90,7 +113,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     // Set up the RecyclerView
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.restaurantListRecyclerView); // get the recyclerview reference
-        RestaurantListRecyclerAdapter adapter = new RestaurantListRecyclerAdapter(this, mNames, mLocs); // create the adapter
+        RestaurantListRecyclerAdapter adapter = new RestaurantListRecyclerAdapter(this, mPubs); // create the adapter
         recyclerView.setAdapter(adapter); // set the recyclerview adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // set the layout manager
 
